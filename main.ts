@@ -1,7 +1,8 @@
+game.splash("SQUARES!", "A to Block, B to Sprint")
+
 namespace SpriteKind {
     export const Block = SpriteKind.create()
     export const FriendlyProjectile = SpriteKind.create()
-    export const ProjectileTemp = SpriteKind.create()
 }
 function stopsprint () {
     speedx = 100
@@ -20,15 +21,6 @@ function blocking () {
         player2.setImage(assets.image`Squarep3`)
     }
 }
-sprites.onOverlap(SpriteKind.Block, SpriteKind.ProjectileTemp, function (sprite, otherSprite) {
-    otherSprite.setVelocity(otherSprite.vx - otherSprite.vx - otherSprite.vx, otherSprite.vy - otherSprite.vy - otherSprite.vy)
-    otherSprite.setKind(SpriteKind.FriendlyProjectile)
-    info.changeScoreBy(1)
-    otherSprite.setImage(assets.image`FriendyBullet0`)
-})
-sprites.onOverlap(SpriteKind.Player, SpriteKind.ProjectileTemp, function (sprite, otherSprite) {
-    game.over(false)
-})
 // sprint
 function sprint () {
     speedx = 150
@@ -41,9 +33,9 @@ sprites.onOverlap(SpriteKind.Projectile, SpriteKind.Projectile, function (sprite
     bouncepvy2 = sprite.vy - sprite.vy - sprite.vy
     sprite.setVelocity(bouncefvx2, bouncefvy2)
     otherSprite.setVelocity(bouncepvx2, bouncepvy2)
-    otherSprite.setKind(SpriteKind.ProjectileTemp)
-    pause(100)
-    otherSprite.setKind(SpriteKind.Projectile)
+    otherSprite.setFlag(SpriteFlag.Ghost, true)
+    pause(30)
+    otherSprite.setFlag(SpriteFlag.Ghost, false)
 })
 sprites.onOverlap(SpriteKind.Player, SpriteKind.Projectile, function (sprite, otherSprite) {
     game.over(false)
@@ -65,9 +57,9 @@ sprites.onOverlap(SpriteKind.FriendlyProjectile, SpriteKind.Projectile, function
     bouncepvy = sprite.vy - sprite.vy - sprite.vy
     sprite.setVelocity(bouncefvx, bouncefvy)
     otherSprite.setVelocity(bouncepvx, bouncepvy)
-    otherSprite.setKind(SpriteKind.ProjectileTemp)
-    pause(100)
-    otherSprite.setKind(SpriteKind.Projectile)
+    otherSprite.setFlag(SpriteFlag.Ghost, true)
+    pause(30)
+    otherSprite.setFlag(SpriteFlag.Ghost, false)
 })
 controller.player1.onButtonEvent(ControllerButton.B, ControllerButtonEvent.Pressed, function () {
     sprint()
@@ -89,9 +81,8 @@ let speedy = 0
 let speedx = 0
 let timebp = 0
 let spin2 = null
-game.splash("SQUARES!", "A to Block, B to Sprint")
-// MUSIC //
-music.playMelody("- - - - - - - - ", 120)
+
+
 // varibles //
 timebp = 1000
 speedx = 100

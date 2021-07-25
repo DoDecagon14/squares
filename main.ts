@@ -11,14 +11,13 @@ function stopsprint () {
 function blocking () {
     if (game.runtime() - lastp >= timebp) {
         player2.setKind(SpriteKind.Block)
-        player2.setImage(assets.image`Squarepblocking`)
+        player2.setImage(assets.image`PlanetMainBlocking0`)
         pause(1000)
         player2.setKind(SpriteKind.Player)
-        player2.setImage(assets.image`Squarep1`)
         lastp = game.runtime()
-        player2.setImage(assets.image`Squarepnotready2`)
+        player2.setImage(assets.image`PlanetMainCD0`)
         pause(1000)
-        player2.setImage(assets.image`Squarep3`)
+        player2.setImage(assets.image`PlanetMain3`)
     }
 }
 // sprint
@@ -44,7 +43,7 @@ sprites.onOverlap(SpriteKind.Block, SpriteKind.Projectile, function (sprite, oth
     otherSprite.setVelocity(otherSprite.vx - otherSprite.vx - otherSprite.vx, otherSprite.vy - otherSprite.vy - otherSprite.vy)
     otherSprite.setKind(SpriteKind.FriendlyProjectile)
     info.changeScoreBy(1)
-    otherSprite.setImage(assets.image`FriendyBullet0`)
+    otherSprite.setImage(assets.image`BulletWorldFr`)
 })
 // Blocking Cooldown functions //
 controller.player1.onButtonEvent(ControllerButton.A, ControllerButtonEvent.Pressed, function () {
@@ -87,10 +86,10 @@ let spin2 = null
 timebp = 1000
 speedx = 100
 speedy = 100
-player2 = sprites.create(assets.image`Squarep0`, SpriteKind.Player)
+player2 = sprites.create(assets.image`PlanetMain3`, SpriteKind.Player)
 player2.setStayInScreen(true)
 // load the sprites then destroy them//
-let projectile = sprites.create(assets.image`bullet2`, SpriteKind.Projectile)
+let projectile = sprites.create(assets.image`BulletWorld`, SpriteKind.Projectile)
 projectile.destroy()
 projectile.setFlag(SpriteFlag.AutoDestroy, true)
 game.onUpdate(function () {
@@ -98,5 +97,5 @@ game.onUpdate(function () {
 })
 // Sqaures blocked and death functions //
 game.onUpdateInterval(500, function () {
-    projectile = sprites.createProjectileFromSide(assets.image`bullet2`, Math.randomRange(50, -50), Math.randomRange(50, -50))
+    projectile = sprites.createProjectileFromSide(assets.image`BulletWorld`, Math.randomRange(50, -50), Math.randomRange(50, -50))
 })

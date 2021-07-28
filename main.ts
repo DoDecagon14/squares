@@ -1,4 +1,4 @@
-game.splash("SQUARES!", "A to Block, B to Sprint")
+game.splash("PLANETS!", "A to Block, B to Boost")
 
 namespace SpriteKind {
     export const Block = SpriteKind.create()
@@ -32,6 +32,8 @@ sprites.onOverlap(SpriteKind.Projectile, SpriteKind.Projectile, function (sprite
     bouncepvy2 = sprite.vy - sprite.vy - sprite.vy
     sprite.setVelocity(bouncefvx2, bouncefvy2)
     otherSprite.setVelocity(bouncepvx2, bouncepvy2)
+    otherSprite.startEffect(effects.ashes, 25)
+    sprite.startEffect(effects.ashes, 25)
     otherSprite.setFlag(SpriteFlag.Ghost, true)
     pause(30)
     otherSprite.setFlag(SpriteFlag.Ghost, false)
@@ -42,6 +44,7 @@ sprites.onOverlap(SpriteKind.Player, SpriteKind.Projectile, function (sprite, ot
 sprites.onOverlap(SpriteKind.Block, SpriteKind.Projectile, function (sprite, otherSprite) {
     otherSprite.setVelocity(otherSprite.vx - otherSprite.vx - otherSprite.vx, otherSprite.vy - otherSprite.vy - otherSprite.vy)
     otherSprite.setKind(SpriteKind.FriendlyProjectile)
+    sprite.startEffect(effects.fountain, 75)
     info.changeScoreBy(1)
     otherSprite.setImage(assets.image`BulletWorldFr`)
 })
@@ -56,6 +59,8 @@ sprites.onOverlap(SpriteKind.FriendlyProjectile, SpriteKind.Projectile, function
     bouncepvy = sprite.vy - sprite.vy - sprite.vy
     sprite.setVelocity(bouncefvx, bouncefvy)
     otherSprite.setVelocity(bouncepvx, bouncepvy)
+    sprite.startEffect(effects.fountain, 25)
+    otherSprite.startEffect(effects.ashes, 25)
     otherSprite.setFlag(SpriteFlag.Ghost, true)
     pause(30)
     otherSprite.setFlag(SpriteFlag.Ghost, false)
